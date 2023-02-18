@@ -5,7 +5,31 @@ const app = express()
 const {bots, playerRecord} = require('./data')
 const {shuffleArray} = require('./utils')
 
+
 app.use(express.json())
+app.use(express.static('public'))
+
+var Rollbar = require('rollbar')
+var rollbar = new Rollbar({
+  accessToken: 'bd4bb366c9b84b7fa749b4a3d611904c',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+})
+
+
+rollbar.log('Hello world!')
+
+app.get('/', (req,res) => {
+    res.sendFile(path.join(__dirname, '/public/index.html'));
+  });
+
+app.get('/css', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/index.css'));
+})
+
+app.get('/js', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/index.js'));
+})
 
 app.get('/api/robots', (req, res) => {
     try {
@@ -67,7 +91,10 @@ app.get('/api/player', (req, res) => {
         res.sendStatus(400)
     }
 })
+const port = process.env.PORT || 4000
+
 
 app.listen(4000, () => {
   console.log(`Listening on 4000`)
 })
+

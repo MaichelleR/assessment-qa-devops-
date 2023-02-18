@@ -18,3 +18,18 @@ test('Title shows up when page loads', async () => {
     const displayed = await title.isDisplayed()
     expect(displayed).toBe(true)
 })
+
+test('Draw button returns an array of cards', async () => {
+    const drawButton = await driver.findElement(By.id('choices'))
+    const displayed = await drawButton.isDisplayed()
+    expect(displayed).toBe(true)
+})
+
+test('See All Bots Button display bot cards correctly', async () => {
+    await driver.findElement(By.id('see-all')).click()
+    const botCardContainer = await driver.findElement(By.id('all-bots'))
+    const displayed = await botCardContainer.isDisplayed()
+
+    expect(displayed).toBe(true)
+
+})
